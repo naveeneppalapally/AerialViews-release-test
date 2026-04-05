@@ -235,8 +235,6 @@ class ScreenController(
             gradientBottomView.visibility = View.VISIBLE
         }
 
-        mainScope.launch { UpdateCheckerHelper.startChecking() }
-
         mainScope.launch {
             // Launch if we have permission
             // Used for a) Skip music tracks b) music info widget

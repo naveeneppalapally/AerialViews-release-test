@@ -1,75 +1,78 @@
 package com.neilturner.aerialviews.utils
 
-import com.neilturner.aerialviews.BuildConfig
-import com.neilturner.aerialviews.models.enums.OverlayType
-import com.neilturner.aerialviews.models.prefs.GeneralPrefs
-import com.neilturner.aerialviews.services.MessageEvent
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import me.kosert.flowbus.GlobalBus
 import org.json.JSONObject
 import timber.log.Timber
 import java.net.HttpURLConnection
 import java.net.URL
 
+data class UpdateInfo(
+    val tagName: String,
+    val downloadUrl: String,
+)
+
 object UpdateCheckerHelper {
     private const val GITHUB_REPO = "naveeneppalapally/AerialViews-release-test"
-    private const val CHECK_INTERVAL_MS = 5 * 60 * 1000L // re-check every 5 minutes
-    private const val INITIAL_DELAY_MS = 30_000L          // first check after 30 s
 
-    suspend fun startChecking() {
-        // Ensure MESSAGE1 is assigned to the top-left slot so the banner is visible.
-        // This must run BEFORE delay() so it takes effect before overlay initialisation
-        // in the sibling coroutine that was launched immediately after this one.
-        if (GeneralPrefs.slotTopLeft1 == OverlayType.EMPTY) {
-            GeneralPrefs.slotTopLeft1 = OverlayType.MESSAGE1
-        }
-        delay(INITIAL_DELAY_MS)
-        while (true) {
+    /** Fetches the latest GitHub release; returns [UpdateInfo] if [currentVersion] is older. */
+    suspend fun checkForUpdate(currentVersion: String): UpdateInfo? =
+        withContext(Dispatchers.IO) {
             try {
-                val latestTag = fetchLatestTag()
-                if (latestTag != null && isNewerVersion(latestTag, BuildConfig.VERSION_NAME)) {
-                    Timber.i("UpdateChecker: new version $latestTag > ${BuildConfig.VERSION_NAME}")
-                    GlobalBus.post(
-                        MessageEvent(
-                            type = OverlayType.MESSAGE1,
-                            text = "⬆ Update available: $latestTag  (installed: v${BuildConfig.VERSION_NAME})",
-                        ),
-                    )
-                } else {
-                    Timber.i("UpdateChecker: up to date (${BuildConfig.VERSION_NAME})")
+                val url = URL("https://api.github.com/repos/$GITHUB_REPO/releases/latest")
+                val conn = url.openConnection() as HttpURLConnection
+                try {
+                    conn.requestMethod = "GET"
+                    conn.setRequestProperty("Accept", "application/vnd.github+json")
+                    conn.setRequestProperty("X-GitHub-Api-Version", "2022-11-28")
+                    conn.connectTimeout = 10_000
+                    conn.readTimeout = 10_000
+                    if (conn.responseCode != 200) {
+                        Timber.w("UpdateChecker: HTTP ${conn.responseCode}")
+                        return@withContext null
+                    }
+                    val body = conn.inputStream.bufferedReader().readText()
+                    val json = JSONObject(body)
+                    val tag = json.optString("tag_name").takeIf { it.isNotBlank() } ?: return@withContext null
+                    val apkUrl = json.optJSONArray("assets")?.let { assets ->
+                        (0 until assets.length())
+                            .map { assets.getJSONObject(it) }
+                            .firstOrNull { it.optString("name").endsWith(".apk") }
+                            ?.optString("browser_download_url")
+                    } ?: return@withContext null
+                    if (isNewerVersion(tag, currentVersion)) UpdateInfo(tag, apkUrl) else null
+                } finally {
+                    conn.disconnect()
                 }
             } catch (e: Exception) {
                 Timber.e(e, "UpdateChecker: check failed")
+                null
             }
-            delay(CHECK_INTERVAL_MS)
         }
-    }
 
-    private suspend fun fetchLatestTag(): String? =
-        withContext(Dispatchers.IO) {
-            val url = URL("https://api.github.com/repos/$GITHUB_REPO/releases/latest")
-            val conn = url.openConnection() as HttpURLConnection
-            try {
-                conn.apply {
-                    requestMethod = "GET"
-                    setRequestProperty("Accept", "application/vnd.github+json")
-                    setRequestProperty("X-GitHub-Api-Version", "2022-11-28")
-                    connectTimeout = 10_000
-                    readTimeout = 10_000
-                }
-                if (conn.responseCode == 200) {
-                    val body = conn.inputStream.bufferedReader().readText()
-                    JSONObject(body).optString("tag_name").takeIf { it.isNotBlank() }
-                } else {
-                    Timber.w("UpdateChecker: HTTP ${conn.responseCode}")
-                    null
-                }
-            } finally {
-                conn.disconnect()
-            }
-        }
+    /**
+     * Enqueues a download of the APK via [DownloadManager].
+     * Returns the download ID so the caller can track progress if needed.
+     */
+    fun enqueueDownload(
+        context: Context,
+        updateInfo: UpdateInfo,
+    ): Long {
+        val fileName = "AerialViews-${updateInfo.tagName}.apk"
+        val request =
+            DownloadManager.Request(Uri.parse(updateInfo.downloadUrl))
+                .setTitle("AerialViews ${updateInfo.tagName}")
+                .setDescription("Downloading update…")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                .setMimeType("application/vnd.android.package-archive")
+        val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        return dm.enqueue(request)
+    }
 
     fun isNewerVersion(
         tagName: String,

@@ -11,5 +11,10 @@
                     app:key="about_date"
                     app:title="@string/about_date_title"
                     app:summary=""/>
+
+                <Preference
+                    app:key="about_update"
+                    app:title="@string/about_update_title"
+                    app:summary="@string/about_update_checking"/>
         </PreferenceCategory>
 </PreferenceScreen>
