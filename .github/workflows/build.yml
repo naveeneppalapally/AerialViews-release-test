@@ -19,7 +19,7 @@ jobs:
   build-release-apk:
     runs-on: ubuntu-latest
     env:
-      EXPECTED_SIGNER_SHA256: ""
+      EXPECTED_SIGNER_SHA256: "B3:57:E7:EB:33:FA:40:1B:7A:D4:81:A0:3A:AC:B2:6D:F3:63:C7:8C:4D:EE:FC:B9:07:48:80:EE:DA:2B:AB:B5"
 
     steps:
       - name: Check out repository
@@ -40,7 +40,7 @@ jobs:
       - name: Build signed release APK
         run: ./gradlew --no-daemon :app:assembleGithubNonMinifiedRelease
         env:
-          KEYSTORE_PATH: aerialviews-plus-release.jks
+          KEYSTORE_PATH: ${{ github.workspace }}/app/aerialviews-plus-release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
@@ -48,10 +48,17 @@ jobs:
       - name: Verify APK signer fingerprint
         run: |
           APK_PATH=$(find app/build/outputs/apk/github/nonMinifiedRelease -name '*.apk' | head -n 1)
+          SIGNER_OWNER=$(keytool -printcert -jarfile "$APK_PATH" | sed -n 's/^Owner: //p' | head -n 1 | tr -d '\r')
           ACTUAL_SIGNER_SHA256=$(keytool -printcert -jarfile "$APK_PATH" | sed -n 's/.*SHA256: //p' | head -n 1 | tr -d '\r')
 
           echo "APK path: $APK_PATH"
+          echo "Signer owner:          $SIGNER_OWNER"
           echo "Actual signer SHA256:   $ACTUAL_SIGNER_SHA256"
+
+          if echo "$SIGNER_OWNER" | grep -q 'CN=Android Debug'; then
+            echo "Refusing to publish a debug-signed release APK" >&2
+            exit 1
+          fi
 
           if [ -z "$ACTUAL_SIGNER_SHA256" ]; then
             echo "Failed to read signer fingerprint from built APK" >&2

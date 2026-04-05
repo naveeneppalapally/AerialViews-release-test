@@ -24,8 +24,8 @@ android {
         applicationId = "com.naveen.aerialviewsplus"
         minSdk = 23 // Android v6
         targetSdk = 36
-        versionCode = 6
-        versionName = "1.2.2"
+        versionCode = 7
+        versionName = "1.3.0"
         betaVersion = "-beta12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -70,6 +70,25 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(
+                System.getenv("KEYSTORE_PATH")
+                    ?: "${System.getProperty("user.home")}/.android/aerialviews-plus-release.jks",
+            )
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("KEY_ALIAS") ?: "aerialviewsplus"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+        }
+        create("legacy") {
+            val releaseProps = loadProperties("signing/legacy.properties")
+            storeFile = releaseProps["storeFile"]?.let { file(it) }
+            storePassword = releaseProps["storePassword"] as String?
+            keyAlias = releaseProps["keyAlias"] as String?
+            keyPassword = releaseProps["keyPassword"] as String?
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -82,6 +101,9 @@ android {
             isDebuggable = false
             isMinifyEnabled = false
             isShrinkResources = false
+            // This workflow publishes githubNonMinifiedRelease; without an explicit signing config,
+            // AGP falls back to the debug keystore and every CI run gets a new signer.
+            signingConfig = signingConfigs.getByName("release")
             buildConfigField("boolean", "ENABLE_YOUTUBE_LOGS", "false")
             matchingFallbacks += listOf("release")
         }
@@ -123,25 +145,6 @@ android {
                 excludes.add("META-INF/*.RSA")
                 excludes.add("META-INF/*.DSA")
             }
-        }
-    }
-
-    signingConfigs {
-        create("release") {
-            storeFile = file(
-                System.getenv("KEYSTORE_PATH")
-                    ?: "${System.getProperty("user.home")}/.android/aerialviews-plus-release.jks",
-            )
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-            keyAlias = System.getenv("KEY_ALIAS") ?: "aerialviewsplus"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
-        }
-        create("legacy") {
-            val releaseProps = loadProperties("signing/legacy.properties")
-            storeFile = releaseProps["storeFile"]?.let { file(it) }
-            storePassword = releaseProps["storePassword"] as String?
-            keyAlias = releaseProps["keyAlias"] as String?
-            keyPassword = releaseProps["keyPassword"] as String?
         }
     }
 
