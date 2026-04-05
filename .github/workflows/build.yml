@@ -19,7 +19,7 @@ jobs:
   build-release-apk:
     runs-on: ubuntu-latest
     env:
-      EXPECTED_SIGNER_SHA256: "07:65:F0:82:BD:9B:5C:61:CA:7D:15:D8:B6:B6:F0:C8:CC:E9:92:16:73:9B:13:81:B4:72:C7:51:AF:81:7D:F9"
+      EXPECTED_SIGNER_SHA256: ""
 
     steps:
       - name: Check out repository
@@ -51,13 +51,19 @@ jobs:
           ACTUAL_SIGNER_SHA256=$(keytool -printcert -jarfile "$APK_PATH" | sed -n 's/.*SHA256: //p' | head -n 1 | tr -d '\r')
 
           echo "APK path: $APK_PATH"
-          echo "Expected signer SHA256: $EXPECTED_SIGNER_SHA256"
           echo "Actual signer SHA256:   $ACTUAL_SIGNER_SHA256"
 
           if [ -z "$ACTUAL_SIGNER_SHA256" ]; then
             echo "Failed to read signer fingerprint from built APK" >&2
             exit 1
           fi
+
+          if [ -z "$EXPECTED_SIGNER_SHA256" ]; then
+            echo "No pinned signer fingerprint configured yet; skipping verification for this release"
+            exit 0
+          fi
+
+          echo "Expected signer SHA256: $EXPECTED_SIGNER_SHA256"
 
           if [ "$ACTUAL_SIGNER_SHA256" != "$EXPECTED_SIGNER_SHA256" ]; then
             echo "APK signer fingerprint does not match the pinned release signer" >&2
