@@ -899,7 +899,7 @@
     <string name="about_last_updated_title">Last updated</string>
     <string name="about_update_title">Check GitHub for Updates</string>
     <string name="about_update_checking">Checking…</string>
-    <string name="about_update_uptodate">Up to date after signed update</string>
+    <string name="about_update_uptodate">Up to date after GitHub fallback</string>
     <string name="about_update_failed">Couldn\'t check for updates</string>
     <string name="about_update_available">%1$s available — press to download &amp; install</string>
     <string name="about_update_downloading">Downloading update…</string>
