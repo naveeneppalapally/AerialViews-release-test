@@ -903,5 +903,14 @@
     <string name="about_update_failed">Couldn\'t check for updates</string>
     <string name="about_update_available">%1$s available — press to download &amp; install</string>
     <string name="about_update_downloading">Downloading update…</string>
+    <string name="home_update_title">Update available</string>
+    <string name="home_update_version">AerialViews+ %1$s -&gt; %2$s</string>
+    <string name="home_update_summary">A newer GitHub build is ready. You can keep using the app while Android downloads it in the background.</string>
+    <string name="home_update_whats_new">What\'s new</string>
+    <string name="home_update_empty_notes">Bug fixes and improvements</string>
+    <string name="home_update_download">Download and Install</string>
+    <string name="home_update_later">Later</string>
+    <string name="home_update_download_started">Downloading AerialViews+ %1$s…</string>
+    <string name="home_update_download_failed">Couldn\'t start the update download</string>
 
 </resources>

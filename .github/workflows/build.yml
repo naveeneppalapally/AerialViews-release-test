@@ -83,6 +83,24 @@ jobs:
           cp app/build/outputs/apk/github/nonMinifiedRelease/*.apk \
              dist/AerialViews-Plus-v${{ github.event.inputs.version }}.apk
 
+      - name: Create update metadata
+        run: |
+          jq -n \
+            --arg tagName "v${{ github.event.inputs.version }}" \
+            --arg versionName "${{ github.event.inputs.version }}" \
+            --arg apkFileName "AerialViews-Plus-v${{ github.event.inputs.version }}.apk" \
+            --arg downloadUrl "https://github.com/${{ github.repository }}/releases/download/v${{ github.event.inputs.version }}/AerialViews-Plus-v${{ github.event.inputs.version }}.apk" \
+            --arg releaseNotes "${{ github.event.inputs.release_notes }}" \
+            --arg publishedAt "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{
+              tagName: $tagName,
+              versionName: $versionName,
+              apkFileName: $apkFileName,
+              downloadUrl: $downloadUrl,
+              releaseNotes: $releaseNotes,
+              publishedAt: $publishedAt
+            }' > dist/update-metadata.json
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -104,7 +122,7 @@ jobs:
             - Source code: github.com/naveeneppalapally/AerialViews-release-test
 
             **Full source:** https://github.com/naveeneppalapally/AerialViews-release-test
-          files: dist/*.apk
+          files: dist/*
           draft: false
           prerelease: false
           generate_release_notes: false

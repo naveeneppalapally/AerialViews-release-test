@@ -14,6 +14,7 @@ import java.net.URL
 data class UpdateInfo(
     val tagName: String,
     val downloadUrl: String,
+    val releaseNotes: String = "",
 )
 
 sealed interface UpdateCheckResult {
@@ -28,6 +29,8 @@ object UpdateCheckerHelper {
     private const val GITHUB_REPO = "naveeneppalapally/AerialViews-release-test"
     private const val GITHUB_API_URL = "https://api.github.com/repos/$GITHUB_REPO/releases/latest"
     private const val GITHUB_LATEST_URL = "https://github.com/$GITHUB_REPO/releases/latest"
+    private const val GITHUB_DOWNLOAD_URL = "https://github.com/$GITHUB_REPO/releases/download"
+    private const val UPDATE_METADATA_FILE = "update-metadata.json"
 
     /** Fetches the latest GitHub release; falls back to the public latest redirect if the API is unavailable. */
     suspend fun checkForUpdate(currentVersion: String): UpdateCheckResult =
@@ -71,7 +74,12 @@ object UpdateCheckerHelper {
                         .firstOrNull { it.optString("name").endsWith(".apk") }
                         ?.optString("browser_download_url")
                 } ?: return null
-            UpdateInfo(tag, apkUrl)
+            fetchReleaseMetadata(tag, currentVersion)
+                ?: UpdateInfo(
+                    tagName = tag,
+                    downloadUrl = apkUrl,
+                    releaseNotes = normaliseReleaseNotes(json.optString("body")),
+                )
         } finally {
             conn.disconnect()
         }
@@ -91,12 +99,63 @@ object UpdateCheckerHelper {
                 return null
             }
             val tag = location.substringAfterLast('/').takeIf { it.startsWith("v") } ?: return null
-            val downloadUrl = "https://github.com/$GITHUB_REPO/releases/download/$tag/AerialViews-Plus-$tag.apk"
-            UpdateInfo(tag, downloadUrl)
+            fetchReleaseMetadata(tag, currentVersion)
+                ?: UpdateInfo(
+                    tagName = tag,
+                    downloadUrl = buildApkDownloadUrl(tag),
+                )
         } finally {
             conn.disconnect()
         }
     }
+
+    private fun fetchReleaseMetadata(
+        tag: String,
+        currentVersion: String,
+    ): UpdateInfo? {
+        val conn = URL(buildMetadataUrl(tag)).openConnection() as HttpURLConnection
+        return try {
+            conn.requestMethod = "GET"
+            conn.setRequestProperty("Accept", "application/json")
+            conn.setRequestProperty("User-Agent", "AerialViewsPlus/$currentVersion")
+            conn.connectTimeout = 10_000
+            conn.readTimeout = 10_000
+            if (conn.responseCode != 200) {
+                Timber.w("UpdateChecker: metadata HTTP ${conn.responseCode} for $tag")
+                return null
+            }
+            val body = conn.inputStream.bufferedReader().readText()
+            val json = JSONObject(body)
+            val metadataTag = json.optString("tagName").takeIf { it.isNotBlank() } ?: tag
+            val downloadUrl =
+                json.optString("downloadUrl").takeIf { it.isNotBlank() }
+                    ?: buildApkDownloadUrl(metadataTag)
+            UpdateInfo(
+                tagName = metadataTag,
+                downloadUrl = downloadUrl,
+                releaseNotes = normaliseReleaseNotes(json.optString("releaseNotes")),
+            )
+        } finally {
+            conn.disconnect()
+        }
+    }
+
+    private fun buildMetadataUrl(tag: String): String = "$GITHUB_DOWNLOAD_URL/$tag/$UPDATE_METADATA_FILE"
+
+    private fun buildApkDownloadUrl(tag: String): String = "$GITHUB_DOWNLOAD_URL/$tag/AerialViews-Plus-$tag.apk"
+
+    private fun normaliseReleaseNotes(releaseNotes: String): String =
+        releaseNotes
+            .lineSequence()
+            .map { line ->
+                when {
+                    line.startsWith("## ") -> line.removePrefix("## ").trim()
+                    line.startsWith("# ") -> line.removePrefix("# ").trim()
+                    else -> line.trimEnd()
+                }
+            }
+            .joinToString("\n")
+            .trim()
 
     /**
      * Enqueues a download of the APK via [DownloadManager].
@@ -116,6 +175,26 @@ object UpdateCheckerHelper {
                 .setMimeType("application/vnd.android.package-archive")
         val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         return dm.enqueue(request)
+    }
+
+    fun installDownloadedApk(
+        context: Context,
+        downloadId: Long,
+    ): Boolean {
+        val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val uri = dm.getUriForDownloadedFile(downloadId)
+        if (uri == null) {
+            Timber.e("UpdateChecker: downloaded file URI null for id=$downloadId")
+            return false
+        }
+        val intent = android.content.Intent(android.content.Intent.ACTION_INSTALL_PACKAGE).apply {
+            data = uri
+            flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+            putExtra(android.content.Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
+            putExtra(android.content.Intent.EXTRA_RETURN_RESULT, true)
+        }
+        context.startActivity(intent)
+        return true
     }
 
     fun isNewerVersion(

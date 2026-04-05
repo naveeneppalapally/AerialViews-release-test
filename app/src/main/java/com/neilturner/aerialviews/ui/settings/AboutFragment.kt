@@ -2,22 +2,16 @@
 
 package com.neilturner.aerialviews.ui.settings
 
-import android.app.DownloadManager
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageInfo
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import com.neilturner.aerialviews.BuildConfig
 import com.neilturner.aerialviews.R
+import com.neilturner.aerialviews.ui.MainActivity
 import com.neilturner.aerialviews.utils.FirebaseHelper
 import com.neilturner.aerialviews.utils.MenuStateFragment
 import com.neilturner.aerialviews.utils.UpdateCheckResult
-import com.neilturner.aerialviews.utils.UpdateCheckerHelper
 import com.neilturner.aerialviews.utils.UpdateInfo
 import com.neilturner.aerialviews.utils.getPackageInfoCompat
 import kotlinx.coroutines.launch
@@ -28,14 +22,6 @@ import java.util.Date
 class AboutFragment : MenuStateFragment() {
 
     private var pendingUpdate: UpdateInfo? = null
-    private var downloadId: Long = -1L
-
-    private val downloadReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
-            if (id == downloadId) installDownloadedApk(context)
-        }
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings_about, rootKey)
@@ -48,17 +34,6 @@ class AboutFragment : MenuStateFragment() {
         FirebaseHelper.analyticsScreenView("About", this)
         updateVersionSummary()
         checkForUpdates()
-        ContextCompat.registerReceiver(
-            requireContext(),
-            downloadReceiver,
-            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-            ContextCompat.RECEIVER_EXPORTED,
-        )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        runCatching { requireContext().unregisterReceiver(downloadReceiver) }
     }
 
     private fun setupUpdatePreference() {
@@ -104,26 +79,15 @@ class AboutFragment : MenuStateFragment() {
         val pref = findPreference<Preference>("about_update") ?: return
         pref.summary = getString(R.string.about_update_downloading)
         pref.isEnabled = false
-        downloadId = UpdateCheckerHelper.enqueueDownload(requireContext(), update)
-    }
-
-    private fun installDownloadedApk(context: Context) {
-        val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val uri = dm.getUriForDownloadedFile(downloadId)
-        if (uri == null) {
-            Timber.e("UpdateChecker: downloaded file URI null for id=$downloadId")
-            findPreference<Preference>("about_update")?.summary = getString(R.string.about_update_uptodate)
-            findPreference<Preference>("about_update")?.isEnabled = true
+        val mainActivity = activity as? MainActivity
+        if (mainActivity == null) {
+            Timber.e("UpdateChecker: MainActivity unavailable for About download")
+            pref.summary = getString(R.string.about_update_failed)
+            pref.isEnabled = true
             return
         }
-        val intent = Intent(Intent.ACTION_INSTALL_PACKAGE).apply {
-            data = uri
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
-            putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
-            putExtra(Intent.EXTRA_RETURN_RESULT, true)
-        }
-        context.startActivity(intent)
-        findPreference<Preference>("about_update")?.isEnabled = true
+        mainActivity.startAppUpdateDownload(update)
+        pref.isEnabled = true
     }
 
     private fun updateVersionSummary() {
