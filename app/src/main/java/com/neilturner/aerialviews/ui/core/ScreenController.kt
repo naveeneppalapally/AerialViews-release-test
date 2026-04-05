@@ -48,6 +48,7 @@ import com.neilturner.aerialviews.utils.FontHelper
 import com.neilturner.aerialviews.utils.GradientHelper
 import com.neilturner.aerialviews.utils.OverlayHelper
 import com.neilturner.aerialviews.utils.PermissionHelper
+import com.neilturner.aerialviews.utils.UpdateCheckerHelper
 import com.neilturner.aerialviews.utils.RefreshRateHelper
 import com.neilturner.aerialviews.utils.ToastHelper
 import com.neilturner.aerialviews.utils.WindowHelper
@@ -233,6 +234,8 @@ class ScreenController(
             gradientBottomView.background = GradientHelper.smoothBackgroundAlt(GradientDrawable.Orientation.BOTTOM_TOP)
             gradientBottomView.visibility = View.VISIBLE
         }
+
+        mainScope.launch { UpdateCheckerHelper.startChecking() }
 
         mainScope.launch {
             // Launch if we have permission

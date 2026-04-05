@@ -67,9 +67,9 @@ jobs:
             ## Notes
             - Sideload only — not for Google Play Store
             - If YouTube stops working, check NewPipe Extractor releases
-            - Source code: github.com/naveeneppalapally/AerialViews-Plus
+            - Source code: github.com/naveeneppalapally/AerialViews-release-test
 
-            **Full source:** https://github.com/naveeneppalapally/AerialViews-Plus
+            **Full source:** https://github.com/naveeneppalapally/AerialViews-release-test
           files: dist/*.apk
           draft: false
           prerelease: false
