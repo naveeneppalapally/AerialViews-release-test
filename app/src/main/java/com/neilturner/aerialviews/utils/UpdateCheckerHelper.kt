@@ -2,6 +2,7 @@ package com.neilturner.aerialviews.utils
 
 import com.neilturner.aerialviews.BuildConfig
 import com.neilturner.aerialviews.models.enums.OverlayType
+import com.neilturner.aerialviews.models.prefs.GeneralPrefs
 import com.neilturner.aerialviews.services.MessageEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -18,6 +19,12 @@ object UpdateCheckerHelper {
     private const val INITIAL_DELAY_MS = 30_000L          // first check after 30 s
 
     suspend fun startChecking() {
+        // Ensure MESSAGE1 is assigned to the top-left slot so the banner is visible.
+        // This must run BEFORE delay() so it takes effect before overlay initialisation
+        // in the sibling coroutine that was launched immediately after this one.
+        if (GeneralPrefs.slotTopLeft1 == OverlayType.EMPTY) {
+            GeneralPrefs.slotTopLeft1 = OverlayType.MESSAGE1
+        }
         delay(INITIAL_DELAY_MS)
         while (true) {
             try {
