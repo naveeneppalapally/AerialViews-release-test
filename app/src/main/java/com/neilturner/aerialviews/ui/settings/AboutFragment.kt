@@ -16,6 +16,7 @@ import com.neilturner.aerialviews.BuildConfig
 import com.neilturner.aerialviews.R
 import com.neilturner.aerialviews.utils.FirebaseHelper
 import com.neilturner.aerialviews.utils.MenuStateFragment
+import com.neilturner.aerialviews.utils.UpdateCheckResult
 import com.neilturner.aerialviews.utils.UpdateCheckerHelper
 import com.neilturner.aerialviews.utils.UpdateInfo
 import com.neilturner.aerialviews.utils.getPackageInfoCompat
@@ -77,14 +78,24 @@ class AboutFragment : MenuStateFragment() {
         pref.summary = getString(R.string.about_update_checking)
         pref.isEnabled = false
         viewLifecycleOwner.lifecycleScope.launch {
-            val update = UpdateCheckerHelper.checkForUpdate(BuildConfig.VERSION_NAME)
-            pendingUpdate = update
-            if (update != null) {
-                pref.summary = getString(R.string.about_update_available, update.tagName)
-                pref.isEnabled = true
-            } else {
-                pref.summary = getString(R.string.about_update_uptodate)
-                pref.isEnabled = true
+            when (val result = UpdateCheckerHelper.checkForUpdate(BuildConfig.VERSION_NAME)) {
+                is UpdateCheckResult.Available -> {
+                    pendingUpdate = result.updateInfo
+                    pref.summary = getString(R.string.about_update_available, result.updateInfo.tagName)
+                    pref.isEnabled = true
+                }
+
+                UpdateCheckResult.UpToDate -> {
+                    pendingUpdate = null
+                    pref.summary = getString(R.string.about_update_uptodate)
+                    pref.isEnabled = true
+                }
+
+                UpdateCheckResult.Failed -> {
+                    pendingUpdate = null
+                    pref.summary = getString(R.string.about_update_failed)
+                    pref.isEnabled = true
+                }
             }
         }
     }
