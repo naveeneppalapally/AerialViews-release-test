@@ -12,6 +12,7 @@ import com.neilturner.aerialviews.ui.MainActivity
 import com.neilturner.aerialviews.utils.FirebaseHelper
 import com.neilturner.aerialviews.utils.MenuStateFragment
 import com.neilturner.aerialviews.utils.UpdateCheckResult
+import com.neilturner.aerialviews.utils.UpdateCheckerHelper
 import com.neilturner.aerialviews.utils.UpdateInfo
 import com.neilturner.aerialviews.utils.getPackageInfoCompat
 import kotlinx.coroutines.launch
