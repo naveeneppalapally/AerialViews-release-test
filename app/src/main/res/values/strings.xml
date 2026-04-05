@@ -897,9 +897,9 @@
     <string name="about_date_title">Build Date</string>
     <string name="about_installed_title">Installed</string>
     <string name="about_last_updated_title">Last updated</string>
-    <string name="about_update_title">Check for Updates</string>
+    <string name="about_update_title">Check for Updates Now</string>
     <string name="about_update_checking">Checking…</string>
-    <string name="about_update_uptodate">Up to date</string>
+    <string name="about_update_uptodate">Up to date on stable channel</string>
     <string name="about_update_available">%1$s available — press to download &amp; install</string>
     <string name="about_update_downloading">Downloading update…</string>
 
