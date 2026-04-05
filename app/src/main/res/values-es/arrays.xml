@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="amazon_video_scene_type_entries">
+    <item>Naturaleza</item>
+    <item>Playa</item>
+    <item>Ciudad</item>
+    <item>Mar</item>
+    <item>Espacio</item>
+    <item>Patrones</item>
+    <item>Fuego</item>
+  </string-array>
+  <string-array name="background_colour_entries">
+    <item>Negro</item>
+    <item>Blanco</item>
+  </string-array>
+  <string-array name="button_action_entries">
+    <item>Ignorar acción</item>
+    <item>Salir del salvapantallas</item>
+    <item>Saltar al siguiente vídeo/foto</item>
+    <item>Saltar al vídeo/foto anterior</item>
+    <item>Aumentar la velocidad de reproducción de vídeo</item>
+    <item>Reducir la velocidad de reproducción de vídeo</item>
+    <item>Mostrar superposiciones (si están ocultas)</item>
+    <item>Apagado de pantalla, desvanecimiento y superposiciones</item>
+    <item>Buscar hacia atrás en un vídeo</item>
+    <item>Apagado de pantalla, desvanecimiento y superposiciones</item>
+    <item>Apagado de pantalla, desvanecimiento y superposiciones</item>
+    <item>Mostrar superposiciones, si están ocultas</item>
+    <item>Apagado de pantalla, desvanecimiento y superposiciones</item>
+    <item>Silenciar/activar audio</item>
+    <item>Pausar/reanudar el temporizador de vídeo o foto</item>
+    <item>Activar o desactivar el audio</item>
+    <item>Pausar/reanudar el temporizador de vídeo o foto</item>
+    <item>Activar o desactivar el bucle para el vídeo actual</item>
+  </string-array>
+  <string-array name="clock_format_entries">
+    <item>Predeterminado</item>
+    <item>12 Horas</item>
+    <item>24 Horas</item>
+  </string-array>
+  <string-array name="comm2_videos_scene_type_entries">
+    <item>Naturaleza</item>
+    <item>Cascada</item>
+    <item>Playa</item>
+    <item>Mar</item>
+  </string-array>
+  <string-array name="comm2_videos_time_of_day_entries">
+    <item>Día</item>
+    <item>Atardecer</item>
+  </string-array>
+  <string-array name="date_format_entries">
+    <item>Compacto</item>
+    <item>Completo</item>
+    <item>Personalizado</item>
+  </string-array>
+  <string-array name="description_filename_entries">
+    <item>Desactivado</item>
+    <item>Usar nombre de archivo formateado</item>
+    <item>Usar el nombre de archivo como está</item>
+    <item>Carpeta y nombre de archivo</item>
+  </string-array>
+  <string-array name="description_photo_filename_entries">
+    <item>Desactivado</item>
+    <item>Utilice un nombre de archivo formateado, por ejemplo. \'switzerland-zürich_train_station.jpg\' se convierte en \'Switzerland - Zürich Train Station\'</item>
+    <item>Use el nombre de archivo tal cual, por ejemplo. \'Japan - Deep snow in Hokkaido.jpg\' se convierte en \'Japan - Deep snow in Hokkaido\'</item>
+    <item>Use la carpeta y el nombre de archivo tal cual, por ejemplo. \'Pictures/Italy/Dolomites.jpg\' se convierte en \'Italy/Dolomites\'</item>
+  </string-array>
+  <string-array name="description_video_entries">
+    <item>Desactivado</item>
+    <item>Breve descripción</item>
+    <item>Puntos de interés dinámicos</item>
+  </string-array>
+  <string-array name="description_video_filename_entries">
+    <item>Desactivado</item>
+    <item>Utilice un nombre de archivo formateado, por ejemplo. \'japan-mount_fuji.mp4\' se convierte en \'Japan - Mount Fuji\'</item>
+    <item>Use el nombre de archivo tal cual, por ejemplo. \'Flying towards Mount Pilatus.mp4\' se convierte en \'Flying towards Mount Pilatus\'</item>
+    <item>Use la carpeta y el nombre de archivo tal cual, por ejemplo. \'Videos/Grand Canyon/Sunet.mp4\' se convierte en \'Grand Canyon / Sunet\'</item>
+  </string-array>
+  <string-array name="description_video_manifest_entries">
+    <item>Desactivado</item>
+    <item>Una breve descripción o ubicación</item>
+    <item>Puntos de interés dinámicos, disponibles en muchos idiomas, que cambian a medida que se reproduce el vídeo</item>
+  </string-array>
+  <string-array name="duration_entries">
+    <item>Desactivado</item>
+    <item>200ms</item>
+    <item>400 ms</item>
+    <item>600 ms</item>
+    <item>800ms</item>
+    <item>1000ms</item>
+    <item>1200ms</item>
+    <item>1400ms</item>
+    <item>1600ms</item>
+    <item>1800ms</item>
+    <item>2000ms</item>
+    <item>4 segundos</item>
+    <item>6 segundos</item>
+    <item>8 segundos</item>
+    <item>10 segundos</item>
+  </string-array>
+  <string-array name="immich_auth_type_entries">
+    <item>Enlace compartido</item>
+    <item>Clave API</item>
+  </string-array>
+  <string-array name="immich_include_entries">
+    <item>Desactivado</item>
+    <item>100 fotos</item>
+    <item>200 fotos</item>
+    <item>300 fotos</item>
+    <item>400 fotos</item>
+  </string-array>
+  <string-array name="limit_Longer_videos_entries">
+    <item>Saltar cuando se alcanza el límite</item>
+    <item>Permitir que terminen los videos más largos</item>
+    <item>Reproducir segmentos aleatorios de videos largos</item>
+  </string-array>
+  <string-array name="limit_Longer_videos_summaries">
+    <item>Obedecer el límite: salta al siguiente video cuando se alcanza el límite</item>
+    <item>Ignorar límite: si un video es más largo que el límite establecido, se reproducirá hasta el final</item>
+    <item>Segmento aleatorio: si un vídeo es más largo que el límite, se reproducirá una parte aleatoria del vídeo
+(por ejemplo, con un límite de 2 minutos, un vídeo de 6 minutos puede tener 3 segmentos, uno de los cuales se reproducirá aleatoriamente)</item>
+  </string-array>
+  <string-array name="local_videos_search_type_entries">
+    <item>Escaneo de medios</item>
+    <item>Acceso a carpetas (obsoleto)</item>
+  </string-array>
+  <string-array name="media_type_entries">
+    <item>Sólo vídeos</item>
+    <item>Sólo imágenes</item>
+    <item>Vídeos &amp; Imágenes</item>
+  </string-array>
+  <string-array name="metadata_folder_level_entries">
+    <item>\'Italia / Puesta de sol\' - 1 nivel</item>
+    <item>\'2025 / Italia / Puesta de sol\' - 2 Niveles</item>
+    <item>\'Paisajes / 2025 / Italia / Puesta de sol\' - 3 niveles</item>
+    <item>\'Fotos / Paisajes / 2025 / Italia / Puesta de sol\' - 4 niveles</item>
+    <item>\'Medios / Fotos / Paisajes / 2025 / Italia / Puesta de sol\' - 5 niveles</item>
+  </string-array>
+  <string-array name="nowplaying_format_entries">
+    <item>Desactivado</item>
+    <item>Canción · Artista</item>
+    <item>Artista · Canción</item>
+    <item>Artista</item>
+    <item>Canción</item>
+  </string-array>
+  <string-array name="overlay_auto_hide_entries">
+    <item>No ocultar nunca (valor predeterminado)</item>
+    <item>Siempre oculto</item>
+    <item>2 segundos</item>
+    <item>4 segundos</item>
+    <item>6 segundos</item>
+    <item>8 segundos</item>
+    <item>10 segundos</item>
+  </string-array>
+  <string-array name="overlay_fade_corners_entries">
+    <item>Arriba a la izquierda</item>
+    <item>Arriba a la derecha</item>
+    <item>Abajo a la izquierda</item>
+    <item>Abajo a la derecha</item>
+  </string-array>
+  <string-array name="overlay_metadata_photo_location_entries">
+    <item>Ciudad</item>
+    <item>Ciudad, Estado</item>
+    <item>Ciudad, País</item>
+    <item>Ciudad, Estado, País</item>
+    <item>País</item>
+  </string-array>
+  <string-array name="overlay_metadata_photos_entries">
+    <item>Ubicación (EXIF/Immich)</item>
+    <item>Fecha de toma (EXIF/Immich)</item>
+    <item>Descripción (EXIF/Immich)</item>
+    <item>Usar el nombre de archivo como está</item>
+    <item>Carpeta y nombre de archivo</item>
+    <item>Solo el nombre de la carpeta</item>
+  </string-array>
+  <string-array name="overlay_metadata_videos_entries">
+    <item>Puntos de interés dinámicos</item>
+    <item>Descripción breve</item>
+    <item>Ubicación (Immich)</item>
+    <item>Descripción (Immich)</item>
+    <item>Usar el nombre de archivo como está</item>
+    <item>Carpeta y nombre de archivo</item>
+    <item>Solo el nombre de la carpeta</item>
+  </string-array>
+  <string-array name="overlay_reveal_timeout_entries">
+    <item>2 segundos</item>
+    <item>4 segundos (predeterminado)</item>
+    <item>6 segundos</item>
+    <item>8 segundos</item>
+    <item>10 segundos</item>
+  </string-array>
+  <string-array name="photo_scale_entries">
+    <item>Rellenar (Predeterminado)</item>
+    <item>Centro</item>
+  </string-array>
+  <string-array name="playback_max_video_length_entries">
+    <item>Sin límite (Predeterminado)</item>
+    <item>10 segundos</item>
+    <item>20 segundos</item>
+    <item>30 segundos</item>
+    <item>1 minuto</item>
+    <item>2 minutos</item>
+    <item>3 minutos</item>
+    <item>4 minutos</item>
+    <item>5 minutos</item>
+    <item>6 minutos</item>
+    <item>7 minutos</item>
+    <item>8 minutos</item>
+    <item>9 minutos</item>
+    <item>10 minutos</item>
+    <item>20 minutos</item>
+    <item>30 minutos</item>
+    <item>60 minutos</item>
+  </string-array>
+  <string-array name="progress_bar_location_entries">
+    <item>Desactivado</item>
+    <item>Parte superior de la pantalla</item>
+    <item>Parte inferior de la pantalla</item>
+  </string-array>
+  <string-array name="progress_bar_type_entries">
+    <item>Vídeos y fotos</item>
+    <item>Sólo vídeos</item>
+    <item>Sólo fotos</item>
+  </string-array>
+  <string-array name="projectivy_shared_providers_entries">
+    <item>Vídeos de Apple</item>
+    <item>Vídeos de Amazon</item>
+    <item>Vídeos de Jetson Creative</item>
+    <item>Videos de Robin Fourcade</item>
+  </string-array>
+  <string-array name="seek_interval_entries">
+    <item>10 segundos</item>
+    <item>20 segundos</item>
+    <item>30 segundos</item>
+    <item>1 minuto</item>
+    <item>2 minutos</item>
+    <item>5 minutos</item>
+  </string-array>
+  <string-array name="sleep_timer_entries">
+    <item>Deshabilitado*</item>
+    <item>1 minuto</item>
+    <item>2 minutos</item>
+    <item>3 minutos</item>
+    <item>4 minutos</item>
+    <item>5 minutos</item>
+    <item>10 minutos</item>
+    <item>15 minutos</item>
+    <item>20 minutos</item>
+    <item>25 minutos</item>
+    <item>30 minutos</item>
+    <item>35 minutos</item>
+    <item>40 minutos</item>
+    <item>45 minutos</item>
+    <item>50 minutos</item>
+    <item>55 minutos</item>
+    <item>60 minutos</item>
+  </string-array>
+  <string-array name="slideshow_speed_entries">
+    <item>5 segundos</item>
+    <item>10 segundos</item>
+    <item>15 segundos</item>
+    <item>20 segundos</item>
+    <item>25 segundos</item>
+    <item>30 segundos*</item>
+    <item>1 minuto</item>
+    <item>2 minutos</item>
+    <item>3 minutos</item>
+    <item>5 minutos</item>
+    <item>10 minutos</item>
+    <item>20 minutos</item>
+    <item>30 minutos</item>
+    <item>1 hora</item>
+    <item>6 horas</item>
+    <item>12 horas</item>
+  </string-array>
+  <string-array name="slot_entries">
+    <item>Vacío</item>
+    <item>Reloj</item>
+    <item>Metadatos #1</item>
+    <item>Metadatos #2</item>
+    <item>Metadatos #3</item>
+    <item>Metadatos #4</item>
+    <item>Clima #1</item>
+    <item>Reproduciendo #1</item>
+    <item>Reproduciendo #2</item>
+    <item>Fecha</item>
+    <item>Mensaje #1</item>
+    <item>Mensaje #2</item>
+    <item>Mensaje #3</item>
+    <item>Mensaje #4</item>
+    <item>Cuenta regresiva</item>
+  </string-array>
+  <string-array name="temperature_units_entries">
+    <item>C° / Celsius</item>
+    <item>F° / Fahrenheit</item>
+  </string-array>
+  <string-array name="text_weight_entries">
+    <item>100/Delgada</item>
+    <item>200/Extra Fina</item>
+    <item>300/Fina*</item>
+    <item>400/Normal</item>
+    <item>500/Mediana</item>
+    <item>600/Semi Negrita</item>
+    <item>700/Negrita</item>
+    <item>800/Extra Negrita</item>
+    <item>900/Intensa</item>
+  </string-array>
+  <string-array name="video_scale_entries">
+    <item>Rellenar recortando (Predeterminado)</item>
+    <item>Escalar sin recortar</item>
+  </string-array>
+  <string-array name="video_scene_type_entries">
+    <item>Naturaleza</item>
+    <item>Campo</item>
+    <item>Playa</item>
+    <item>Ciudad</item>
+    <item>Mar</item>
+    <item>Espacio exterior</item>
+  </string-array>
+  <string-array name="video_time_of_day_entries">
+    <item>Amanecer</item>
+    <item>Día</item>
+    <item>Atardecer</item>
+    <item>Noche</item>
+  </string-array>
+  <string-array name="weather_forecast_type_entries">
+    <item>Vacío</item>
+    <item>Ciudad</item>
+    <item>Temperatura</item>
+    <item>Icono</item>
+    <item>Resumen</item>
+  </string-array>
+  <string-array name="weather_type_entries">
+    <item>Vacío</item>
+    <item>Pronóstico</item>
+    <item>Viento</item>
+    <item>Humedad</item>
+    <item>Amanecer</item>
+  </string-array>
+</resources>

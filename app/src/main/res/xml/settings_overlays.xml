@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <PreferenceCategory app:title="@string/category_slots">
+                <Preference
+                    app:title="@string/appearance_top_row_title"
+                    app:summary="@string/appearance_top_row_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysRowTopFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_bottom_row_title"
+                    app:summary="@string/appearance_bottom_row_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysRowBottomFragment"/>
+        </PreferenceCategory>
+
+        <PreferenceCategory app:title="@string/category_options">
+                <Preference
+                    app:title="@string/appearance_auto_hide_options_title"
+                    app:summary="@string/appearance_auto_hide_options_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysAutoHideFragment"/>
+
+                <CheckBoxPreference
+                    app:defaultValue="true"
+                    app:key="alt_text_position"
+                    app:summary="@string/appearance_alt_text_position_summary"
+                    app:title="@string/appearance_alt_text_position_title" />
+
+        </PreferenceCategory>
+
+        <PreferenceCategory app:title="@string/category_overlays">
+                <Preference
+                    app:title="@string/appearance_metadata_title"
+                    app:summary="@string/appearance_metadata_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysMetadataFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_weather_title"
+                    app:summary="@string/appearance_weather_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysWeatherFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_music_title"
+                    app:summary="@string/appearance_music_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysNowPlayingFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_date_title"
+                    app:summary="@string/appearance_date_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysDateFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_message_title"
+                    app:summary="@string/appearance_message_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysMessageFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_clock_title"
+                    app:summary="@string/appearance_clock_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysClockFragment"/>
+
+                <Preference
+                    app:title="@string/appearance_countdown_title"
+                    app:summary="@string/appearance_countdown_summary"
+                    app:fragment="com.neilturner.aerialviews.ui.settings.OverlaysCountdownFragment"/>
+
+        </PreferenceCategory>
+</PreferenceScreen>

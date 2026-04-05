@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/category_capabilities">
+        <Preference
+            android:key="capabilities_device"
+            android:title="@string/capabilities_device_title"
+            android:summary="" />
+
+        <Preference
+            android:key="capabilities_display"
+            android:title="@string/capabilities_display_title"
+            android:summary="" />
+
+        <Preference
+            android:key="capabilities_resolution"
+            android:title="@string/capabilities_current_resolution_title"
+            android:summary="" />
+
+        <Preference
+            android:key="capabilities_codecs"
+            android:title="@string/capabilities_codecs_title"
+            android:summary="" />
+
+        <Preference
+            android:key="capabilities_decoders"
+            android:title="@string/capabilities_decoders_title"
+            android:summary="" />
+
+        <Preference
+            android:key="capabilities_permissions"
+            android:title="@string/capabilities_permissions_title"
+            android:summary="" />
+
+        <Preference
+            app:isPreferenceVisible="false"
+            android:key="capabilities_resolutions"
+            android:title="@string/capabilities_resolutions_title"
+            android:summary="" />
+
+        <Preference
+            app:isPreferenceVisible="false"
+            android:key="capabilities_refresh_rates"
+            android:title="@string/capabilities_refresh_rates_title"
+            android:summary="" />
+    </PreferenceCategory>
+</PreferenceScreen>

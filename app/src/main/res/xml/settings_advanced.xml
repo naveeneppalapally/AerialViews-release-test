@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <PreferenceCategory app:title="@string/category_refresh_rate_options">
+                <SwitchPreference
+                    app:defaultValue="false"
+                    app:key="application_overlay_permission"
+                    app:title="@string/advanced_application_overlay_permission_title"
+                    app:summary="@string/advanced_application_overlay_permission_summary" />
+
+                <CheckBoxPreference
+                    app:dependency="application_overlay_permission"
+                    app:disableDependentsState="false"
+                    app:defaultValue="false"
+                    app:key="refresh_rate_switching"
+                    app:summary="@string/advanced_refresh_rate_switching_summary"
+                    app:title ="@string/advanced_refresh_rate_switching_title" />
+        </PreferenceCategory>
+
+        <PreferenceCategory app:title="@string/category_media_render_options">
+                <CheckBoxPreference
+                    app:defaultValue="true"
+                    app:key="enable_tunneling"
+                    app:summary="@string/advanced_enable_tunneling_summary"
+                    app:title="@string/advanced_enable_tunneling_title" />
+
+                <CheckBoxPreference
+                    app:defaultValue="false"
+                    app:key="allow_fallback_decoders"
+                    app:summary="@string/allow_fallback_decoders_summary"
+                    app:title="@string/allow_fallback_decoders_title" />
+
+                <CheckBoxPreference
+                    app:defaultValue="false"
+                    app:key="enable_playback_logging"
+                    app:summary="@string/enable_playback_logging_summary"
+                    app:title="@string/enable_playback_logging_title" />
+
+                <CheckBoxPreference
+                    app:defaultValue="false"
+                    app:key="show_media_error_toasts"
+                    app:summary="@string/show_media_error_toasts_summary"
+                    app:title="@string/show_media_error_toasts_title" />
+
+                <CheckBoxPreference
+                    app:defaultValue="false"
+                    app:key="philips_dolby_vision_fix"
+                    app:summary="@string/advanced_philips_dolby_vision_fix_summary"
+                    app:title="@string/advanced_philips_dolby_vision_fix_title" />
+
+                <CheckBoxPreference
+                    app:defaultValue="false"
+                    app:key="use_texture_view_for_video"
+                    app:summary="@string/advanced_use_texture_view_summary"
+                    app:title="@string/advanced_use_texture_view_title" />
+        </PreferenceCategory>
+
+        <PreferenceCategory app:title="@string/category_animation">
+                <CheckBoxPreference
+                    app:defaultValue="true"
+                    app:key="ignore_animation_scale"
+                    app:summary="@string/advanced_ignore_animation_scale_summary"
+                    app:title="@string/advanced_ignore_animation_scale_title" />
+        </PreferenceCategory>
+
+        <PreferenceCategory app:title="@string/category_appearance">
+                <ListPreference
+                    app:key="locale_menu"
+                    app:defaultValue="@string/locale_menu_default"
+                    app:entries="@array/locale_menu_entries"
+                    app:entryValues="@array/locale_menu_values"
+                    app:title="@string/advanced_locale_menu_title"
+                    app:useSimpleSummaryProvider="true" />
+
+                <ListPreference
+                    app:key="locale_screensaver"
+                    app:defaultValue="@string/locale_screensaver_default"
+                    app:entries="@array/locale_screensaver_entries"
+                    app:entryValues="@array/locale_screensaver_values"
+                    app:title="@string/advanced_locale_screensaver_title"
+                    app:useSimpleSummaryProvider="true" />
+        </PreferenceCategory>
+
+        <Preference
+            app:key="legal_notices"
+            app:title="Legal Notices"
+            app:summary="Open source licenses and copyright information"
+            app:fragment="com.neilturner.aerialviews.ui.settings.LegalNoticesFragment" />
+</PreferenceScreen>

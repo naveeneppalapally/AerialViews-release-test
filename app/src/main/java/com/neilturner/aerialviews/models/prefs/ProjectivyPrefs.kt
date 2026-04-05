@@ -1,0 +1,109 @@
+package com.neilturner.aerialviews.models.prefs
+
+import com.chibatching.kotpref.KotprefModel
+import com.chibatching.kotpref.enumpref.nullableEnumValuePref
+import com.neilturner.aerialviews.R
+import com.neilturner.aerialviews.models.enums.ProviderMediaType
+import com.neilturner.aerialviews.models.enums.SearchType
+import com.neilturner.aerialviews.models.enums.VideoQuality
+
+object ProjectivyPrefs : KotprefModel() {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    var shuffleVideos by booleanPref(true, "projectivy_shuffle_videos")
+
+    val sharedProviders by stringSetPref("projectivy_shared_providers") {
+        context.resources.getStringArray(R.array.projectivy_shared_providers_default).toSet()
+    }
+
+    fun hasProvider(providerKey: String): Boolean =
+        sharedProviders.any { provider ->
+            provider.equals(providerKey, ignoreCase = true)
+        }
+}
+
+object ProjectivyApplePrefs : KotprefModel(), ProviderPreferences {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    override val enabled: Boolean
+        get() = ProjectivyPrefs.hasProvider("APPLE")
+    override var quality by nullableEnumValuePref(VideoQuality.VIDEO_1080_SDR, "projectivy_apple_videos_quality")
+    var count by stringPref("-1", "projectivy_apple_videos_count")
+
+    override val scene by stringSetPref("projectivy_apple_videos_scene_type") {
+        context.resources.getStringArray(R.array.video_scene_type_default).toSet()
+    }
+
+    override val timeOfDay by stringSetPref("projectivy_apple_videos_time_of_day") {
+        context.resources.getStringArray(R.array.video_time_of_day_default).toSet()
+    }
+}
+
+object ProjectivyAmazonPrefs : KotprefModel(), ProviderPreferences {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    override val enabled: Boolean
+        get() = ProjectivyPrefs.hasProvider("AMAZON")
+    override var quality by nullableEnumValuePref(VideoQuality.VIDEO_1080_SDR, "projectivy_amazon_videos_quality")
+    var count by stringPref("-1", "projectivy_amazon_videos_count")
+
+    override val scene by stringSetPref("projectivy_amazon_videos_scene_type") {
+        context.resources.getStringArray(R.array.amazon_video_scene_type_default).toSet()
+    }
+
+    override val timeOfDay by stringSetPref("projectivy_amazon_videos_time_of_day") {
+        context.resources.getStringArray(R.array.video_time_of_day_default).toSet()
+    }
+}
+
+object ProjectivyComm1Prefs : KotprefModel(), ProviderPreferences {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    override val enabled: Boolean
+        get() = ProjectivyPrefs.hasProvider("COMM1")
+    override var quality by nullableEnumValuePref(VideoQuality.VIDEO_1080_SDR, "projectivy_comm1_videos_quality")
+    var count by stringPref("-1", "projectivy_comm1_videos_count")
+
+    override val scene by stringSetPref("projectivy_comm1_videos_scene_type") {
+        context.resources.getStringArray(R.array.video_scene_type_default).toSet()
+    }
+
+    override val timeOfDay by stringSetPref("projectivy_comm1_videos_time_of_day") {
+        context.resources.getStringArray(R.array.video_time_of_day_default).toSet()
+    }
+}
+
+object ProjectivyComm2Prefs : KotprefModel(), ProviderPreferences {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    override val enabled: Boolean
+        get() = ProjectivyPrefs.hasProvider("COMM2")
+    override var quality by nullableEnumValuePref(VideoQuality.VIDEO_1080_SDR, "projectivy_comm2_videos_quality")
+    var count by stringPref("-1", "projectivy_comm2_videos_count")
+
+    override val scene by stringSetPref("projectivy_comm2_videos_scene_type") {
+        context.resources.getStringArray(R.array.comm2_videos_scene_type_default).toSet()
+    }
+
+    override val timeOfDay by stringSetPref("projectivy_comm2_videos_time_of_day") {
+        context.resources.getStringArray(R.array.video_time_of_day_default).toSet()
+    }
+}
+
+object ProjectivyLocalMediaPrefs : KotprefModel(), LocalProviderPreferences {
+    override val kotprefName = "${context.packageName}_preferences"
+
+    override val enabled: Boolean
+        get() = ProjectivyPrefs.hasProvider("LOCAL")
+
+    override var searchType by nullableEnumValuePref(SearchType.MEDIA_STORE, "projectivy_local_videos_search_type")
+    override var mediaType by nullableEnumValuePref(ProviderMediaType.VIDEOS, "projectivy_local_media_type")
+
+    override var filterEnabled by booleanPref(false, "projectivy_local_videos_media_store_filter_enabled")
+    override var filterFolder by stringPref("", "projectivy_local_videos_media_store_filter_folder")
+
+    override var legacyVolumeLabel by stringPref("", "projectivy_local_videos_legacy_volume_label")
+    override var legacyVolume by stringPref("", "projectivy_local_videos_legacy_volume")
+    override var legacyFolder by stringPref("", "projectivy_local_videos_legacy_folder")
+    override var legacySearchSubfolders by booleanPref(false, "projectivy_local_videos_legacy_search_subfolders")
+}
