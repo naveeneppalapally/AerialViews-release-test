@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="update_prompt_surface_top">#F12B2B2B</color>
-	<color name="update_prompt_surface_bottom">#F12B2B2B</color>
-	<color name="update_prompt_surface_stroke">#26FFFFFF</color>
-	<color name="update_prompt_text_primary">#FFF5F7F7</color>
-	<color name="update_prompt_text_secondary">#BFC8CB</color>
-	<color name="update_prompt_text_accent">#8FD2D1</color>
-	<color name="update_prompt_accent_soft">#1A8FD2D1</color>
-	<color name="update_prompt_notes_surface">#11000000</color>
-	<color name="update_prompt_button_primary">#12363B3E</color>
-	<color name="update_prompt_button_primary_focused">#365E61</color>
-	<color name="update_prompt_button_primary_pressed">#2B4B4E</color>
-	<color name="update_prompt_button_secondary">#0AFFFFFF</color>
-	<color name="update_prompt_button_secondary_focused">#18FFFFFF</color>
-	<color name="update_prompt_button_secondary_pressed">#12FFFFFF</color>
-	<color name="update_prompt_left_surface">#F1111111</color>
+	<color name="update_prompt_surface_top">#F0101010</color>
+	<color name="update_prompt_surface_bottom">#F0101010</color>
+	<color name="update_prompt_surface_stroke">#22FFFFFF</color>
+	<color name="update_prompt_text_primary">#FFFFFFFF</color>
+	<color name="update_prompt_text_secondary">#AAFFFFFF</color>
+	<color name="update_prompt_text_accent">#FFFFFFFF</color>
+	<color name="update_prompt_accent_soft">#18FFFFFF</color>
+	<color name="update_prompt_notes_surface">#00000000</color>
+	<color name="update_prompt_button_primary">#FF1A1A1A</color>
+	<color name="update_prompt_button_primary_focused">#FF333333</color>
+	<color name="update_prompt_button_primary_pressed">#FF222222</color>
+	<color name="update_prompt_button_secondary">#0DFFFFFF</color>
+	<color name="update_prompt_button_secondary_focused">#22FFFFFF</color>
+	<color name="update_prompt_button_secondary_pressed">#15FFFFFF</color>
+	<color name="update_prompt_left_surface">#F0000000</color>
 </resources>
