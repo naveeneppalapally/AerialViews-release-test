@@ -24,8 +24,8 @@ android {
         applicationId = "com.naveen.aerialviewsplus"
         minSdk = 23 // Android v6
         targetSdk = 36
-        versionCode = 14
-        versionName = "1.3.7"
+        versionCode = 15
+        versionName = "1.3.8"
         betaVersion = "-beta12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
