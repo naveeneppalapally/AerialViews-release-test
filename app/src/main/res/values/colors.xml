@@ -14,4 +14,5 @@
 	<color name="update_prompt_button_secondary">#0AFFFFFF</color>
 	<color name="update_prompt_button_secondary_focused">#18FFFFFF</color>
 	<color name="update_prompt_button_secondary_pressed">#12FFFFFF</color>
+	<color name="update_prompt_left_surface">#F1192325</color>
 </resources>

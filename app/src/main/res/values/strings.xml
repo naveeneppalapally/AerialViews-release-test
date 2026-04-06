@@ -912,5 +912,9 @@
     <string name="home_update_later">Later</string>
     <string name="home_update_download_started">Downloading AerialViews+ %1$s…</string>
     <string name="home_update_download_failed">Couldn\'t start the update download</string>
+    <string name="home_update_badge">New version available</string>
+    <string name="home_update_app_name">AerialViews+</string>
+    <string name="home_update_highlights">Release highlights</string>
+    <string name="home_update_version_stable">Version stable</string>
 
 </resources>
