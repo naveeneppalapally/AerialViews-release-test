@@ -72,6 +72,7 @@ object HomeUpdatePromptHelper {
     ): String {
         val formatted =
             releaseNotes
+                .replace("\\n", "\n")
                 .lineSequence()
                 .filter { it.isNotBlank() }
                 .map { line ->
