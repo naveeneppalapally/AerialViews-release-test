@@ -53,13 +53,13 @@
         android:textColor="@color/update_prompt_text_accent"
         android:textSize="12sp" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@drawable/update_prompt_notes_background"
         android:fadeScrollbars="false"
-        android:maxHeight="228dp"
+        android:maxHeight="180dp"
         android:scrollbars="vertical">
 
         <TextView
@@ -71,7 +71,7 @@
             android:padding="20dp"
             android:textColor="@color/update_prompt_text_primary"
             android:textSize="15sp" />
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
