@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import com.neilturner.aerialviews.R
 import com.neilturner.aerialviews.databinding.DialogUpdatePromptBinding
@@ -50,25 +49,11 @@ object HomeUpdatePromptHelper {
 
         dialog.show()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val density = context.resources.displayMetrics.density
-        val screenDp = (context.resources.displayMetrics.heightPixels / density).toInt()
-        // ~420dp reserved for title/version/summary/labels/buttons/padding
-        val maxNotesDp = (screenDp - 420).coerceIn(80, 200)
-        val maxNotesPx = (maxNotesDp * density).toInt()
-
-        binding.updatePromptNotesScroll.post {
-            val naturalH = binding.updatePromptNotes.height
-            if (naturalH > maxNotesPx) {
-                binding.updatePromptNotesScroll.layoutParams.height = maxNotesPx
-                binding.updatePromptNotesScroll.requestLayout()
-            }
-            dialog.window?.setLayout(
-                (context.resources.displayMetrics.widthPixels * 0.54f).toInt(),
-                WindowManager.LayoutParams.WRAP_CONTENT,
-            )
-            binding.updatePromptDownload.requestFocus()
-        }
+        dialog.window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.54f).toInt(),
+            (context.resources.displayMetrics.heightPixels * 0.86f).toInt(),
+        )
+        binding.updatePromptDownload.requestFocus()
         return dialog
     }
 
