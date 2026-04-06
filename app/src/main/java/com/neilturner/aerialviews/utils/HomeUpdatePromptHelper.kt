@@ -50,11 +50,25 @@ object HomeUpdatePromptHelper {
 
         dialog.show()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.setLayout(
-            (context.resources.displayMetrics.widthPixels * 0.54f).toInt(),
-            WindowManager.LayoutParams.WRAP_CONTENT,
-        )
-        binding.updatePromptDownload.requestFocus()
+
+        val density = context.resources.displayMetrics.density
+        val screenDp = (context.resources.displayMetrics.heightPixels / density).toInt()
+        // ~420dp reserved for title/version/summary/labels/buttons/padding
+        val maxNotesDp = (screenDp - 420).coerceIn(80, 200)
+        val maxNotesPx = (maxNotesDp * density).toInt()
+
+        binding.updatePromptNotesScroll.post {
+            val naturalH = binding.updatePromptNotes.height
+            if (naturalH > maxNotesPx) {
+                binding.updatePromptNotesScroll.layoutParams.height = maxNotesPx
+                binding.updatePromptNotesScroll.requestLayout()
+            }
+            dialog.window?.setLayout(
+                (context.resources.displayMetrics.widthPixels * 0.54f).toInt(),
+                WindowManager.LayoutParams.WRAP_CONTENT,
+            )
+            binding.updatePromptDownload.requestFocus()
+        }
         return dialog
     }
 
