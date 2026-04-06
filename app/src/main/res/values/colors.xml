@@ -7,12 +7,8 @@
 	<color name="update_prompt_text_secondary">#AAFFFFFF</color>
 	<color name="update_prompt_text_accent">#FFFFFFFF</color>
 	<color name="update_prompt_accent_soft">#18FFFFFF</color>
-	<color name="update_prompt_notes_surface">#00000000</color>
 	<color name="update_prompt_button_primary">#FF1A1A1A</color>
 	<color name="update_prompt_button_primary_focused">#FF333333</color>
 	<color name="update_prompt_button_primary_pressed">#FF222222</color>
-	<color name="update_prompt_button_secondary">#0DFFFFFF</color>
-	<color name="update_prompt_button_secondary_focused">#22FFFFFF</color>
-	<color name="update_prompt_button_secondary_pressed">#15FFFFFF</color>
 	<color name="update_prompt_left_surface">#F0000000</color>
 </resources>
