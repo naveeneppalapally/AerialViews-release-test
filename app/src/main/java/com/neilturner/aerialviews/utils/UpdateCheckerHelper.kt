@@ -201,8 +201,8 @@ object UpdateCheckerHelper {
         tagName: String,
         currentVersion: String,
     ): Boolean {
-        val remote = tagName.removePrefix("v").split(".").mapNotNull { it.toIntOrNull() }
-        val local = currentVersion.removePrefix("v").split(".").mapNotNull { it.toIntOrNull() }
+        val remote = parseVersionParts(tagName)
+        val local = parseVersionParts(currentVersion)
         for (i in 0 until maxOf(remote.size, local.size)) {
             val r = remote.getOrElse(i) { 0 }
             val l = local.getOrElse(i) { 0 }
@@ -211,4 +211,15 @@ object UpdateCheckerHelper {
         }
         return false
     }
+
+    private fun parseVersionParts(version: String): List<Int> =
+        version
+            .removePrefix("v")
+            .split(".")
+            .mapNotNull { segment ->
+                segment
+                    .takeWhile { character -> character.isDigit() }
+                    .takeIf { it.isNotEmpty() }
+                    ?.toIntOrNull()
+            }
 }

@@ -22,10 +22,14 @@ object HomeUpdatePromptHelper {
         binding.updatePromptVersion.text =
             context.getString(
                 R.string.home_update_version,
+                updateInfo.tagName.removePrefix("v"),
+            )
+        binding.updatePromptSummary.text =
+            context.getString(
+                R.string.home_update_summary,
                 currentVersion,
                 updateInfo.tagName.removePrefix("v"),
             )
-        binding.updatePromptSummary.text = context.getString(R.string.home_update_summary)
         binding.updatePromptWhatsNew.text = context.getString(R.string.home_update_whats_new)
         binding.updatePromptNotes.text = formatReleaseNotes(context, updateInfo.releaseNotes)
         binding.updatePromptDownload.text = context.getString(R.string.home_update_download)
@@ -47,7 +51,7 @@ object HomeUpdatePromptHelper {
         dialog.show()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setLayout(
-            (context.resources.displayMetrics.widthPixels * 0.72f).toInt(),
+            (context.resources.displayMetrics.widthPixels * 0.54f).toInt(),
             WindowManager.LayoutParams.WRAP_CONTENT,
         )
         binding.updatePromptDownload.requestFocus()
@@ -61,11 +65,15 @@ object HomeUpdatePromptHelper {
         val formatted =
             releaseNotes
                 .lineSequence()
+                .filter { it.isNotBlank() }
                 .map { line ->
                     when {
                         line.startsWith("## ") -> line.removePrefix("## ").trim()
                         line.startsWith("# ") -> line.removePrefix("# ").trim()
-                        else -> line.trimEnd()
+                        line.startsWith("- ") -> "• ${line.removePrefix("- ").trim()}"
+                        line.startsWith("* ") -> "• ${line.removePrefix("* ").trim()}"
+                        line.startsWith("• ") -> line.trim()
+                        else -> "• ${line.trim()}"
                     }
                 }
                 .joinToString("\n")
