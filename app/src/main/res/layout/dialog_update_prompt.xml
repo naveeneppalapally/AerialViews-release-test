@@ -77,13 +77,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/update_prompt_download"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_weight="1"
             android:background="@drawable/update_prompt_button_primary_background"
             android:fontFamily="sans-serif-medium"
             android:textAllCaps="false"
@@ -92,10 +91,9 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/update_prompt_later"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/update_prompt_button_secondary_background"
             android:fontFamily="sans-serif"
             android:textAllCaps="false"
